@@ -1,0 +1,15 @@
+{% comment %} 
+    This snippet takes in 2 mandatory variables, 1 optional and returns on 'value_returned'
+    phrase_tags -> Array
+    phrase_key -> String ( To identify value )
+    extra_separator -> String ( Will take the value identifeied and split by this character ) If this is defined value_returned will be an array
+{% endcomment %}
+
+{% assign phrase_tags = phrase_tags | join: ',' | downcase | split: ','%}
+{% for item in phrase_tags %}
+    {% if item contains phrase_key %}{% assign value_returned = item | split: phrase_key | last %}{% break %}{% endif %}
+{% endfor %}
+
+{% if extra_separator %}
+    {% assign value_returned = value_returned | split: extra_separator %}
+{% endif %}
